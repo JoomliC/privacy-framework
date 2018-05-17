@@ -38,6 +38,7 @@ class PrivacyModelCapabilities extends JModelLegacy
 		 * by the extension when building the array. An example of the structure expected to be returned from plugins can be found in the
 		 * $coreCapabilities array below.
 		 */
+
 		$coreCapabilities = array(
 			JText::_('COM_PRIVACY_HEADING_CORE_CAPABILITIES') => array(
 				JText::_('COM_PRIVACY_CORE_CAPABILITY_SESSION_IP_ADDRESS_AND_COOKIE'),
@@ -45,7 +46,41 @@ class PrivacyModelCapabilities extends JModelLegacy
 			)
 		);
 
-		return $coreCapabilities;
+		/*
+		 * We will search for capabilities from the following plugin groups:
+		 *
+		 * - Authentication: These plugins by design process user information and may have capabilities such as creating cookies
+		 * - Captcha: These plugins may communicate information to third party systems
+		 * - Privacy: These plugins are the primary integration point into this component
+		 * - User: These plugins are intended to extend the user management system
+		 *
+		 * This is in addition to plugin groups which are imported before this method is triggered, generally this is the system group.
+		 */
+
+		JPluginHelper::importPlugin('authentication');
+		JPluginHelper::importPlugin('captcha');
+		JPluginHelper::importPlugin('privacy');
+		JPluginHelper::importPlugin('user');
+
+		$pluginResults = $app->triggerEvent('onPrivacyCollectAdminCapabilities');
+
+		// We are going to "cheat" here and include this component's capabilities without using a plugin
+		$extensionCapabilities = array(
+			JText::_('COM_PRIVACY') => array(
+				JText::_('COM_PRIVACY_EXTENSION_CAPABILITY_PERSONAL_INFO'),
+			)
+		);
+
+		foreach ($pluginResults as $pluginResult)
+		{
+			$extensionCapabilities += $pluginResult;
+		}
+
+		// Sort the extension list alphabetically
+		ksort($extensionCapabilities);
+
+		// Always prepend the core capabilities to the array
+		return $coreCapabilities + $extensionCapabilities;
 	}
 
 	/**
