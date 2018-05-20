@@ -76,8 +76,8 @@ class PrivacyModelCapabilities extends JModelLegacy
 			$extensionCapabilities += $pluginResult;
 		}
 
-		// Sort the extension list alphabetically
-		ksort($extensionCapabilities);
+		// Sort the extension list alphabetically case insensitive
+		ksort($extensionCapabilities, SORT_STRING | SORT_FLAG_CASE);
 
 		// Always prepend the core capabilities to the array
 		return $coreCapabilities + $extensionCapabilities;
