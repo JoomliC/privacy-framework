@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Consent management model class.
+ * Consents management model class.
  *
  * @since  __DEPLOY_VERSION__
  */
-class PrivacyModelConsent extends JModelList
+class PrivacyModelConsents extends JModelList
 {
 	/**
 	 * Constructor.
