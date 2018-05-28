@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 
-/** @var PrivacyViewConsent $this */
+/** @var PrivacyViewConsents $this */
 
 // Load the tooltip behavior.
 JHtml::_('bootstrap.tooltip');
@@ -22,7 +22,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 $now       = JFactory::getDate();
 
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_privacy&view=consent'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_privacy&view=consents'); ?>" method="post" name="adminForm" id="adminForm">
 	<?php if (!empty($this->sidebar)) : ?>
 		<div id="j-sidebar-container" class="span2">
 			<?php echo $this->sidebar; ?>
@@ -38,7 +38,7 @@ $now       = JFactory::getDate();
 				<?php echo JText::_('COM_PRIVACY_MSG_CONSENT_NO_CONSENT'); ?>
 			</div>
 		<?php else : ?>
-			<table class="table table-striped" id="consentList">
+			<table class="table table-striped" id="consentsList">
 				<thead>
 					<tr>
                         <th width="10%" class="nowrap">
