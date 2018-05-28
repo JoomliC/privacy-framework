@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * Consent view class
+ * Consents view class
  *
  * @since  __DEPLOY_VERSION__
  */
-class PrivacyViewConsent extends JViewLegacy
+class PrivacyViewConsents extends JViewLegacy
 {
 	/**
 	 * The active search tools filters
